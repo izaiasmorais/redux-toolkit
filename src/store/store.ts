@@ -1,11 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit/dist/configureStore";
-import cartUiSlice from "./cart/cartUiSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import modalSlice from "./slicers/modalSlice";
 
-const store = configureStore({
+export const store = configureStore({
 	reducer: {
-		cart: cartUiSlice.reducer,
-		cartUi: cartUiSlice.reducer,
+		modal: modalSlice.reducer,
 	},
 });
 
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
