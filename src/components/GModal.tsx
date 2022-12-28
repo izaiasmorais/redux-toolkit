@@ -6,23 +6,24 @@ import {
 	ModalBody,
 	ModalCloseButton,
 	Button,
-	Input,
 	Flex,
-	Box,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { onClose } from "../store/slicers/modalSlice";
 import { FormEvent } from "react";
-import { FidelityMarkdown } from "./Markdown";
-import { Label } from "./Label";
+import { ModalTabs } from "./ModalTabs";
+import { General } from "./ModalTabs/General";
 
 export function GModal() {
-	const isOpen = useSelector((state: RootState) => state.modal.isOpen);
+	const { activeTab, isOpen } = useSelector((state: RootState) => state.modal);
+	const newCampaign = useSelector((state: RootState) => state.newCampaign);
 	const dispatch = useDispatch();
 
 	function handleCreateFidelity(event: FormEvent) {
 		event.preventDefault();
+
+		console.log(newCampaign);
 	}
 
 	return (
@@ -32,26 +33,21 @@ export function GModal() {
 				<ModalHeader>Criar Fidelidade</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
+					<ModalTabs activeTab={activeTab} />
+
 					<Flex
 						direction="column"
 						gap=".75rem"
 						as="form"
 						onSubmit={handleCreateFidelity}
 					>
-						<Box>
-							<Label text="Nome da campanha" />
-							<Input type="text" required />
-						</Box>
-
-						<Box>
-							<Label text="Validade da campanha" />
-							<Input type="date" required />
-						</Box>
-
-						<Box>
-							<Label text="Regulamento" />
-							<FidelityMarkdown />
-						</Box>
+						{activeTab === "general" ? (
+							<General />
+						) : activeTab === "score" ? (
+							<Flex> Pontuar </Flex>
+						) : (
+							<Flex>Resgatar</Flex>
+						)}
 
 						<Flex gap=".5rem" justify="flex-end" mt="2rem">
 							<Button

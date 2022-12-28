@@ -1,18 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IModal {
 	isOpen: boolean;
+	activeTab: "general" | "score" | "rescue";
 }
 
 const modalSlice = createSlice({
 	name: "modal",
-	initialState: {} as IModal,
+	initialState: {
+		isOpen: false,
+		activeTab: "general",
+	} as IModal,
 	reducers: {
 		onOpen(state) {
 			state.isOpen = true;
 		},
 		onClose(state) {
 			state.isOpen = false;
+		},
+		setActiveTab(state, action: PayloadAction<"general" | "score" | "rescue">) {
+			state.activeTab = action.payload;
 		},
 	},
 });
