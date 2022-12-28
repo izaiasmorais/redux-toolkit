@@ -18,7 +18,7 @@ function App() {
 				my="100px"
 			>
 				<Flex
-					bg="#f5f5f5"
+					bg="#e7f0f771"
 					justify="space-between"
 					align="center"
 					px="1rem"
