@@ -1,15 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { format } from "date-fns";
 
 interface newCampaig {
 	nome: string;
 	semValidade: boolean;
-	validoAte: Date;
+	validoAte: string;
 	regulamento: string;
 }
 
 const newCampaignSlice = createSlice({
 	name: "newCampaig",
-	initialState: {} as newCampaig,
+	initialState: {
+		nome: "",
+		semValidade: false,
+		validoAte: "",
+		regulamento: "",
+	} as newCampaig,
 	reducers: {
 		setCampaignName(state, action: PayloadAction<string>) {
 			state.nome = action.payload;
@@ -17,8 +23,10 @@ const newCampaignSlice = createSlice({
 		setCampaignWithoutValidate(state, action: PayloadAction<boolean>) {
 			state.semValidade = action.payload;
 		},
-		setCampaignValidade(state, action: PayloadAction<Date>) {
-			state.validoAte = new Date(action.payload);
+		setCampaignValidade(state, action: PayloadAction<string>) {
+			let formattedDate = format(new Date(action.payload), "dd/MM/yyyy");
+
+			state.validoAte = formattedDate;
 		},
 		setCampaignRegulation(state, action: PayloadAction<string>) {
 			state.regulamento = action.payload;

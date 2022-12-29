@@ -25,7 +25,7 @@ function App() {
 					py=".5rem"
 					borderRadius=".5rem"
 				>
-					<Text>Criar fidelidade</Text>
+					<Text as="h1">Lista de Fidelidades</Text>
 					<Button
 						outline="none"
 						colorScheme="purple"

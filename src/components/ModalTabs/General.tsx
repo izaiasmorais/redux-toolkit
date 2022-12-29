@@ -31,9 +31,7 @@ export function General() {
 				<Input
 					type="date"
 					required
-					onChange={(e) =>
-						dispatch(setCampaignValidade(new Date(e.target.value)))
-					}
+					onChange={(e) => dispatch(setCampaignValidade(e.target.value))}
 				/>
 			</Box>
 
