@@ -14,11 +14,14 @@ import { onClose } from "../store/slicers/modalSlice";
 import { FormEvent } from "react";
 import { ModalTabs } from "./ModalTabs";
 import { General } from "./ModalTabs/General";
+import { fetchQuotes } from "../store/slicers/fidelityListSlice";
 
 export function GModal() {
 	const { activeTab, isOpen } = useSelector((state: RootState) => state.modal);
 	const newCampaign = useSelector((state: RootState) => state.newCampaign);
 	const dispatch = useDispatch();
+
+	dispatch(fetchQuotes());
 
 	function handleCreateFidelity(event: FormEvent) {
 		event.preventDefault();

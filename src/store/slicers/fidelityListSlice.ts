@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { api } from "../../lib/axios";
 
 interface IFidelity {
 	id: string;
@@ -9,7 +10,24 @@ interface IFidelity {
 	ativo: true;
 }
 
-const modalSlice = createSlice({
+interface IQuote {
+	anime: string;
+	character: string;
+	quote: string;
+}
+
+export const fetchQuotes = createAsyncThunk(
+	"fidelityList/fetchQuotes",
+	async () => {
+		const response: IQuote[] = await api.get(
+			"https://animechan.vercel.app/api/quotes"
+		);
+
+		return response;
+	}
+);
+
+const fidelityListSlice = createSlice({
 	name: "fidelityList",
 	initialState: [] as IFidelity[],
 	reducers: {
@@ -21,8 +39,13 @@ const modalSlice = createSlice({
 		},
 		changeFidelityStatus(state, action: PayloadAction<string>) {},
 	},
+	extraReducers(builder) {
+		builder.addCase(fetchQuotes.fulfilled, (state, { payload }) => {
+			console.log(payload);
+		});
+	},
 });
 
-export default modalSlice;
+export default fidelityListSlice;
 
-export const fidelityListActions = modalSlice.actions;
+export const fidelityListActions = fidelityListSlice.actions;
